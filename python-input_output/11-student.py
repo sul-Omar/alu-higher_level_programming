@@ -2,8 +2,9 @@
 
 """
 This class defines a student.
-It also includes a method to return.
-If an optional list of attribute names is provided.
+It includes methods for serialization:
+- to_json: retrieves a dictionary representation.
+- reload_from_json: updates the student.
 """
 
 
@@ -15,7 +16,7 @@ class Student:
         Args:
             first_name: The student's first name.
             last_name: The student's last name.
-            age: The student's age.
+            age (int): The student's age.
         """
         self.first_name = first_name
         self.last_name = last_name
@@ -23,13 +24,13 @@ class Student:
 
     def to_json(self, attrs=None):
         """
-        Retrieves the dictionary of the Student.
+        Retrieves the dictionary representation.
 
         Args:
-            attrs (list): A list of attribute in dictionary.
+            attrs (list): A list of attribute.
 
         Returns:
-            dict: A dictionary containing the selected.
+            dict: A dictionary selected student.
         """
         if attrs is None:
             return {
@@ -43,3 +44,13 @@ class Student:
                 if hasattr(self, attr):
                     result[attr] = getattr(self, attr)
             return result
+
+    def reload_from_json(self, json):
+        """
+        Replaces all attributes of the Student.
+
+        Args:
+            json (dict): A dictionary containing attribute.
+        """
+        for key, value in json.items():
+            setattr(self, key, value)
