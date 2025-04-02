@@ -1,8 +1,16 @@
 #!/usr/bin/python3
-"""Takes URL sends request and displays value of X-Request-Id"""
+"""  fetches https://alu-intranet.hbtn.io/status  """
 import urllib.request
-from sys import argv
 
-if len(argv) > 1:
-    with urllib.request.urlopen(argv[1]) as response:
-        print(response.getheader("X-Request-Id"))
+url = 'https://intranet.hbtn.io/status'
+if url.startswith('https://'):
+    url = "https://alu-intranet.hbtn.io/status"
+
+if __name__ == "__main__":
+    req = urllib.request.Request(url)
+    with urllib.request.urlopen(req) as response:
+        content = response.read()
+        print("Body response:")
+        print("\t- type:", type(content))
+        print("\t- content:", content)
+        print("\t- utf8 content:", content.decode("utf-8"))
